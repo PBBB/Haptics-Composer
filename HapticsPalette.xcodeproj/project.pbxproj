@@ -17,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2BA06626241939E000911135 /* HapticsPalette.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HapticsPalette.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BA06626241939E000911135 /* Haptics Palette.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Haptics Palette.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA06629241939E000911135 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2BA0662B241939E000911135 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		2BA0662E241939E000911135 /* HapticsPalette.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HapticsPalette.xcdatamodel; sourceTree = "<group>"; };
@@ -50,7 +50,7 @@
 		2BA06627241939E000911135 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2BA06626241939E000911135 /* HapticsPalette.app */,
+				2BA06626241939E000911135 /* Haptics Palette.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,7 +95,7 @@
 			);
 			name = HapticsPalette;
 			productName = HapticsPalette;
-			productReference = 2BA06626241939E000911135 /* HapticsPalette.app */;
+			productReference = 2BA06626241939E000911135 /* Haptics Palette.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -298,7 +298,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pbb.HapticsPalette;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Haptics Palette";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -318,7 +318,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pbb.HapticsPalette;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Haptics Palette";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
