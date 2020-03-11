@@ -12,6 +12,14 @@ import CoreHaptics
 struct ContentView: View {
     @State private var supportsHaptics: Bool = true
     @State private var engine: CHHapticEngine!
+    @State private var hapticDict = [
+        CHHapticPattern.Key.pattern: [
+            [CHHapticPattern.Key.event: [CHHapticPattern.Key.eventType: CHHapticEvent.EventType.hapticTransient,
+                  CHHapticPattern.Key.time: 0.001,
+                  CHHapticPattern.Key.eventDuration: 1.0] // End of first event
+            ] // End of first dictionary entry in the array
+        ] // End of array
+    ] // End of haptic dictionary
     var body: some View {
         NavigationView {
             if supportsHaptics {
@@ -22,6 +30,7 @@ struct ContentView: View {
                     }
                     HStack {
                         Button("Play") {
+                            self.playHaptics()
                             
                         }
                         Spacer()
@@ -61,8 +70,21 @@ struct ContentView: View {
             }
             self.engine.resetHandler = self.engineResetHandler
             self.engine.stoppedHandler = self.engineStoppedHandler(reason:)
+            self.engine.start(completionHandler: nil)
         }
         
+        
+    }
+    
+    func playHaptics() {
+        do {
+            let pattern = try CHHapticPattern(dictionary: hapticDict)
+            let player = try engine.makePlayer(with: pattern)
+            try player.start(atTime: 0)
+            
+        } catch {
+            fatalError("Failed to create palyer: \(error)")
+        }
         
     }
     
