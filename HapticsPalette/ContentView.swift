@@ -47,7 +47,8 @@ struct ContentView: View {
                         }
                         .disabled(self.hapticEvents.count == 0)
                     }
-                    .padding(.horizontal, 16.0)
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
                 }
                 .navigationBarTitle("Haptics Composer")
             .navigationBarItems(leading: EditButton())
@@ -59,7 +60,7 @@ struct ContentView: View {
 //                    })
             } else {
                 VStack(spacing: 4) {
-                    Text("Your devices doesn't support Core Haptics.")
+                    Text("Your device doesn't support Core Haptics.")
                     Text("Please update your phone to iPhone 8 or later.")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
