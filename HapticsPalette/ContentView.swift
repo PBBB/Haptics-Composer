@@ -20,6 +20,8 @@ struct ContentView: View {
             ] // End of first dictionary entry in the array
         ] // End of array
     ] // End of haptic dictionary
+    @State private var showAddSheet = false
+    
     var body: some View {
         NavigationView {
             if supportsHaptics {
@@ -29,18 +31,22 @@ struct ContentView: View {
                         Text("2")
                     }
                     HStack {
+                        Button("Add Haptics") {
+                            self.showAddSheet = true
+                        }
+                        Spacer()
                         Button("Play") {
                             self.playHaptics()
                             
                         }
                         Spacer()
-                        Button("Add Haptics") {
+                        Button("Share") {
                             
                         }
                     }
                     .padding(.horizontal, 16.0)
                 }
-                .navigationBarTitle("Haptics Palette")
+                .navigationBarTitle("Haptics Composer")
 //                .navigationBarItems(
 //                    leading: Button("Play") {
 //
@@ -53,8 +59,8 @@ struct ContentView: View {
                     Text("Please update your phone to iPhone 8 or later.")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
+                        .navigationBarTitle("Haptics Composer")
                 }
-                .navigationBarTitle("Haptics Palette")
             }
         }
         .onAppear {
@@ -65,13 +71,22 @@ struct ContentView: View {
                 do {
                     self.engine = try CHHapticEngine()
                 } catch let error {
-                    fatalError("Engine Creation Error: \(error)")
+                    print("Engine Creation Error: \(error)")
                 }
             }
+            //for preview
+            if self.engine == nil { return }
+            
             self.engine.resetHandler = self.engineResetHandler
             self.engine.stoppedHandler = self.engineStoppedHandler(reason:)
             self.engine.start(completionHandler: nil)
         }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            //for preview
+            if self.engine == nil { return }
+            self.engine.start(completionHandler: nil)
+        }
+        .sheet(isPresented: self.$showAddSheet, content: { AddHapticsView() })
         
         
     }
@@ -79,11 +94,11 @@ struct ContentView: View {
     func playHaptics() {
         do {
             let pattern = try CHHapticPattern(dictionary: hapticDict)
-            let player = try engine.makePlayer(with: pattern)
-            try player.start(atTime: 0)
+            let player = try engine.makeAdvancedPlayer(with: pattern)
+            try player.start(atTime: CHHapticTimeImmediate)
             
         } catch {
-            fatalError("Failed to create palyer: \(error)")
+            print("Failed to create palyer: \(error)")
         }
         
     }
@@ -99,7 +114,7 @@ struct ContentView: View {
                // Recreate all haptic pattern players you had created, using createPlayer.
 
            } catch {
-               fatalError("Failed to restart the engine: \(error)")
+               print("Failed to restart the engine: \(error)")
            }
     }
     
