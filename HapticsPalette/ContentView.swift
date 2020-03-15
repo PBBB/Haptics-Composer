@@ -19,11 +19,18 @@ struct ContentView: View {
         NavigationView {
             if supportsHaptics {
                 VStack {
+                    
                     List {
                         ForEach(hapticEvents, id: \.self) { event in
-                            Text("\(event.type.rawValue)")
-                        }                        
+                            NavigationLink(destination: AddHapticsView(engine: self.$engine, hapticEvents: self.$hapticEvents)) {
+                                Text("\(event.type.rawValue)")
+                            }
+                        }
+                        .onDelete { indexSet in
+                            self.hapticEvents.remove(atOffsets: indexSet)
+                        }
                     }
+                    
                     HStack {
                         Button("Add Haptics") {
                             self.showAddSheet = true
@@ -43,6 +50,7 @@ struct ContentView: View {
                     .padding(.horizontal, 16.0)
                 }
                 .navigationBarTitle("Haptics Composer")
+            .navigationBarItems(leading: EditButton())
 //                .navigationBarItems(
 //                    leading: Button("Play") {
 //
