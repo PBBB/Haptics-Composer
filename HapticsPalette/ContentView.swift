@@ -86,7 +86,7 @@ struct ContentView: View {
             if self.engine == nil { return }
             self.engine.start(completionHandler: nil)
         }
-        .sheet(isPresented: self.$showAddSheet, content: { AddHapticsView() })
+        .sheet(isPresented: self.$showAddSheet, content: { AddHapticsView(engine: self.$engine) })
         
         
     }
