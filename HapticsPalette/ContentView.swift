@@ -12,14 +12,7 @@ import CoreHaptics
 struct ContentView: View {
     @State private var supportsHaptics: Bool = true
     @State private var engine: CHHapticEngine!
-    @State private var hapticDict = [
-        CHHapticPattern.Key.pattern: [
-            [CHHapticPattern.Key.event: [CHHapticPattern.Key.eventType: CHHapticEvent.EventType.hapticTransient,
-                  CHHapticPattern.Key.time: 0.001,
-                  CHHapticPattern.Key.eventDuration: 1.0] // End of first event
-            ] // End of first dictionary entry in the array
-        ] // End of array
-    ] // End of haptic dictionary
+    @State private var hapticEvents: [CHHapticEvent] = []
     @State private var showAddSheet = false
     
     var body: some View {
@@ -27,8 +20,9 @@ struct ContentView: View {
             if supportsHaptics {
                 VStack {
                     List {
-                        Text("1")
-                        Text("2")
+                        ForEach(hapticEvents, id: \.self) { event in
+                            Text("\(event.type.rawValue)")
+                        }                        
                     }
                     HStack {
                         Button("Add Haptics") {
@@ -39,10 +33,12 @@ struct ContentView: View {
                             self.playHaptics()
                             
                         }
+                        .disabled(self.hapticEvents.count == 0)
                         Spacer()
                         Button("Share") {
                             
                         }
+                        .disabled(self.hapticEvents.count == 0)
                     }
                     .padding(.horizontal, 16.0)
                 }
@@ -86,14 +82,14 @@ struct ContentView: View {
             if self.engine == nil { return }
             self.engine.start(completionHandler: nil)
         }
-        .sheet(isPresented: self.$showAddSheet, content: { AddHapticsView(engine: self.$engine) })
+        .sheet(isPresented: self.$showAddSheet, content: { AddHapticsView(engine: self.$engine, hapticEvents: self.$hapticEvents) })
         
         
     }
     
     func playHaptics() {
         do {
-            let pattern = try CHHapticPattern(dictionary: hapticDict)
+            let pattern = try CHHapticPattern(events: self.hapticEvents, parameterCurves: [])
             let player = try engine.makeAdvancedPlayer(with: pattern)
             try player.start(atTime: CHHapticTimeImmediate)
             

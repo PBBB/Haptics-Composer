@@ -10,8 +10,9 @@ import SwiftUI
 import CoreHaptics
 
 struct AddHapticsView: View {
-    private let types = ["Transient", "Continuous", "Pause"]
+    private let types = ["Transient", "Continuous"]
     @Binding var engine: CHHapticEngine!
+    @Binding var hapticEvents: [CHHapticEvent]
     @State private var selection = "Transient"
     @State private var relativeTime = "0"
     @State private var duration = "0.5"
@@ -65,32 +66,33 @@ struct AddHapticsView: View {
                                 .multilineTextAlignment(.trailing)
                         }
                     }
-                    
-                    Section (header: Text("ENVELOPE PARAMETERS")) {
-                        HStack {
-                            Text("Attack Time")
-                            Slider(value: $attackTime, in: -1.0...1.0, onEditingChanged: self.continuousPreview)
-                            Text("\(attackTime, specifier:"%.02f")")
-                        }
-                        HStack {
-                            Text("Decay Time")
-                            Slider(value: $decayTime, in: -1.0...1.0, onEditingChanged: self.continuousPreview)
-                            Text("\(decayTime, specifier:"%.02f")")
-                        }
-                        HStack {
-                            Toggle("Sustained", isOn: $sustained)
-                                .onTapGesture {
-                                    self.continuousPreview()
+                    //if self.selection == "Continuous" {
+                    if true {
+                        Section (header: Text("ENVELOPE PARAMETERS")) {
+                            HStack {
+                                Text("Attack Time")
+                                Slider(value: $attackTime, in: -1.0...1.0, onEditingChanged: self.continuousPreview)
+                                Text("\(attackTime, specifier:"%.02f")")
+                            }
+                            HStack {
+                                Text("Decay Time")
+                                Slider(value: $decayTime, in: -1.0...1.0, onEditingChanged: self.continuousPreview)
+                                Text("\(decayTime, specifier:"%.02f")")
+                            }
+                            HStack {
+                                Toggle("Sustained", isOn: $sustained)
+                            }
+                            HStack {
+                                Text("Release Time")
+                                Slider(value: $releaseTime, in: 0...1.0, onEditingChanged: self.continuousPreview)
+                                Text("\(releaseTime, specifier:"%.02f")")
                             }
                         }
-                        HStack {
-                            Text("Release Time")
-                            Slider(value: $releaseTime, in: -1.0...1.0, onEditingChanged: self.continuousPreview)
-                            Text("\(releaseTime, specifier:"%.02f")")
-                        }
+                        .transition(.opacity)
                     }
                     
-                    Section (header: Text("PREVIEW"), footer: Text("Automatically plays haptic preview each time you change a parameter.")) {
+                    
+                    Section (header: Text("PREVIEW"), footer: Text("Automatically plays haptic preview each time you change a parameter (except \"Sustained\" toggle).")) {
                         Toggle("Continuous Preview", isOn: $continuousPreview)
                     }
                     
@@ -102,7 +104,9 @@ struct AddHapticsView: View {
                     }
                     Spacer()
                     Button("Add") {
-                        
+                        self.createHapticEvent()
+                        self.hapticEvents.append(self.hapticEvent)
+                        self.presentationMode.wrappedValue.dismiss()
                     }
                     .font(Font.body.weight(.medium))
                 }
@@ -164,7 +168,8 @@ struct AddHapticsView: View {
 struct AddHapticsView_Previews: PreviewProvider {
     static var previews: some View {
         let engine = Binding.constant(try? CHHapticEngine())
-        return AddHapticsView(engine: engine)
+        let events = Binding.constant([CHHapticEvent]())
+        return AddHapticsView(engine: engine, hapticEvents: events)
     }
 }
 
