@@ -16,6 +16,7 @@
 		2BA06633241939E100911135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BA06632241939E100911135 /* Assets.xcassets */; };
 		2BA06636241939E100911135 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BA06635241939E100911135 /* Preview Assets.xcassets */; };
 		2BA06639241939E100911135 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BA06637241939E100911135 /* LaunchScreen.storyboard */; };
+		2BB21DDE241F9F6E004C0DC8 /* EditHapticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB21DDD241F9F6E004C0DC8 /* EditHapticsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		2BA06635241939E100911135 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2BA06638241939E100911135 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2BA0663A241939E100911135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BB21DDD241F9F6E004C0DC8 /* EditHapticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHapticsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				2BA0662B241939E000911135 /* SceneDelegate.swift */,
 				2BA06630241939E000911135 /* ContentView.swift */,
 				2B030610241E1A630048A77D /* AddHapticsView.swift */,
+				2BB21DDD241F9F6E004C0DC8 /* EditHapticsView.swift */,
 				2B030612241E72180048A77D /* HapticPropertiesView.swift */,
 				2BA06632241939E100911135 /* Assets.xcassets */,
 				2BA06637241939E100911135 /* LaunchScreen.storyboard */,
@@ -159,6 +162,7 @@
 				2BA0662F241939E000911135 /* HapticsPalette.xcdatamodeld in Sources */,
 				2BA0662A241939E000911135 /* AppDelegate.swift in Sources */,
 				2BA06631241939E000911135 /* ContentView.swift in Sources */,
+				2BB21DDE241F9F6E004C0DC8 /* EditHapticsView.swift in Sources */,
 				2B030613241E72180048A77D /* HapticPropertiesView.swift in Sources */,
 				2BA0662C241939E000911135 /* SceneDelegate.swift in Sources */,
 			);

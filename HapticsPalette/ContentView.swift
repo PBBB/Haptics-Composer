@@ -19,11 +19,10 @@ struct ContentView: View {
         NavigationView {
             if supportsHaptics {
                 VStack {
-                    
                     List {
-                        ForEach(hapticEvents, id: \.self) { event in
-                            NavigationLink(destination: AddHapticsView(engine: self.$engine, hapticEvents: self.$hapticEvents)) {
-                                Text("\(event.type.rawValue)")
+                        ForEach(hapticEvents, id: \.self) { hapticEvent in
+                            NavigationLink(destination: EditHapticsView(engine: self.$engine, hapticEvents: self.$hapticEvents, hapticEvent: hapticEvent)) {
+                                Text("\(hapticEvent.type.rawValue)")
                             }
                         }
                         .onDelete { indexSet in

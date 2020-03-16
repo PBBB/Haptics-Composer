@@ -17,8 +17,8 @@ struct HapticPropertiesView: View {
     let actionHandler: () -> Void
     
     @State private var selection = "Transient"
-    @State private var relativeTime = "0"
-    @State private var duration = "0.5"
+    @State private var relativeTime = "0.00"
+    @State private var duration = "0.50"
     @State private var intensity = 0.5
     @State private var sharpness = 0.5
     @State private var attackTime = 0.0
@@ -112,6 +112,30 @@ struct HapticPropertiesView: View {
             .padding(.horizontal)
             .padding(.vertical, 8)
         }
+        .padding(.top, -36)
+        .onAppear {
+            if self.hapticEvent != nil {
+                self.selection = self.hapticEvent.type ==  CHHapticEvent.EventType.hapticTransient ? "Transient" : "Continuous"
+                self.relativeTime = String(format: "%0.2f", self.hapticEvent.relativeTime)
+                self.duration = String(format: "%0.2f", self.hapticEvent.duration)
+                for paramrter in self.hapticEvent.eventParameters {
+                    if paramrter.parameterID == .hapticIntensity {
+                        self.intensity = Double(paramrter.value)
+                    } else if paramrter.parameterID == .hapticSharpness {
+                        self.sharpness = Double(paramrter.value)
+                    } else if paramrter.parameterID == .attackTime {
+                        self.attackTime = Double(paramrter.value)
+                    } else if paramrter.parameterID == .decayTime {
+                        self.decayTime = Double(paramrter.value)
+                    } else if paramrter.parameterID == .sustained {
+                        self.sustained = paramrter.value == 0 ? false : true
+                    } else if paramrter.parameterID == .releaseTime {
+                        self.releaseTime = Double(paramrter.value)
+                    }
+                }
+                
+            }
+        }
     }
     
     func createHapticEvent() {
@@ -163,7 +187,27 @@ struct HapticPropertiesView_Previews: PreviewProvider {
         let engine = Binding.constant(try? CHHapticEngine())
         let event = Binding<CHHapticEvent?>.constant(nil)
         return HapticPropertiesView(engine: engine, hapticEvent: event, actionName: "Add") {
-            
         }
+    }
+}
+
+// implementing scroll/touch to dismiss keyboard
+class AnyGestureRecognizer: UIGestureRecognizer {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+        state = .began
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+       state = .ended
+    }
+
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
+        state = .cancelled
+    }
+}
+
+extension SceneDelegate: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

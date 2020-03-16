@@ -24,7 +24,7 @@ struct AddHapticsView: View {
                 self.hapticEvents.append(self.hapticEvent)
                 self.presentationMode.wrappedValue.dismiss()
             }
-                .navigationBarTitle(Text("Add Haptics"), displayMode: .large)
+                .navigationBarTitle(Text("Add Haptics"), displayMode: .inline)
                 .navigationBarItems(leading: Button("Cancel"){
                     self.presentationMode.wrappedValue.dismiss()
             })
@@ -42,23 +42,3 @@ struct AddHapticsView_Previews: PreviewProvider {
     }
 }
 
-// implementing scroll/touch to dismiss keyboard
-class AnyGestureRecognizer: UIGestureRecognizer {
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
-        state = .began
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-       state = .ended
-    }
-
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
-        state = .cancelled
-    }
-}
-
-extension SceneDelegate: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-}
