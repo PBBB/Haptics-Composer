@@ -20,7 +20,10 @@ struct AddHapticsView: View {
     
     var body: some View {
         NavigationView {
-            HapticPropertiesView(engine: $engine, hapticEvent: $hapticEvent)
+            HapticPropertiesView(engine: $engine, hapticEvent: $hapticEvent, actionName: "Add") {
+                self.hapticEvents.append(self.hapticEvent)
+                self.presentationMode.wrappedValue.dismiss()
+            }
                 .navigationBarTitle(Text("Add Haptics"), displayMode: .large)
                 .navigationBarItems(leading: Button("Cancel"){
                     self.presentationMode.wrappedValue.dismiss()

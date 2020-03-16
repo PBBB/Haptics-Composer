@@ -13,6 +13,8 @@ struct HapticPropertiesView: View {
     private let types = ["Transient", "Continuous"]
     @Binding var engine: CHHapticEngine!
     @Binding var hapticEvent: CHHapticEvent!
+    let actionName: String
+    let actionHandler: () -> Void
     
     @State private var selection = "Transient"
     @State private var relativeTime = "0"
@@ -90,7 +92,7 @@ struct HapticPropertiesView: View {
                 }
                 
                 Section (header: Text("PREVIEW"), footer: Text("Automatically plays haptic preview each time you change a parameter (except \"Sustained\" toggle).")) {
-                    Toggle("Continuous Preview", isOn: $continuousPreview)
+                    Toggle("Real-time Preview", isOn: $continuousPreview)
                 }
             }
             
@@ -99,10 +101,11 @@ struct HapticPropertiesView: View {
                     self.previewHaptics()
                 }
                 Spacer()
-                Button("Add") {
-                    //                        self.createHapticEvent()
+                Button(actionName) {
+                    self.createHapticEvent()
                     //                        self.hapticEvents.append(self.hapticEvent)
-                    //                        self.presentationMode.wrappedValue.dismiss()
+                    self.actionHandler()
+//                    self.presentationMode.wrappedValue.dismiss()
                 }
                 .font(Font.body.weight(.medium))
             }
@@ -159,6 +162,8 @@ struct HapticPropertiesView_Previews: PreviewProvider {
     static var previews: some View {
         let engine = Binding.constant(try? CHHapticEngine())
         let event = Binding<CHHapticEvent?>.constant(nil)
-        return HapticPropertiesView(engine: engine, hapticEvent: event)
+        return HapticPropertiesView(engine: engine, hapticEvent: event, actionName: "Add") {
+            
+        }
     }
 }
