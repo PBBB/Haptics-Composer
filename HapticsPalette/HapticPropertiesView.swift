@@ -17,8 +17,8 @@ struct HapticPropertiesView: View {
     let actionHandler: () -> Void
     
     @State private var selection = "Transient"
-    @State private var relativeTime = "0.00"
-    @State private var duration = "0.50"
+    @State private var relativeTime = "0.000"
+    @State private var duration = "0.500"
     @State private var intensity = 0.5
     @State private var sharpness = 0.5
     @State private var attackTime = 0.0
@@ -42,12 +42,12 @@ struct HapticPropertiesView: View {
                     HStack {
                         Text("Intensity")
                         Slider(value: $intensity, in: 0.0...1.0, onEditingChanged: self.continuousPreview)
-                        Text("\(intensity, specifier:"%.02f")")
+                        Text("\(intensity, specifier:"%.03f")")
                     }
                     HStack {
                         Text("Sharpness")
                         Slider(value: $sharpness, in: 0.0...1.0, onEditingChanged: self.continuousPreview)
-                        Text("\(sharpness, specifier:"%.02f")")
+                        Text("\(sharpness, specifier:"%.03f")")
                     }
                     HStack {
                         Text("Relative Time (seconds)")
@@ -57,27 +57,28 @@ struct HapticPropertiesView: View {
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                     }
-                    HStack {
-                        Text("Duration (seconds)")
-                            .layoutPriority(1)
-                            .padding(.trailing, 8)
-                        TextField("", text: $duration, onCommit: { self.continuousPreview() })
-                            .keyboardType(.decimalPad)
-                            .multilineTextAlignment(.trailing)
+                    if self.selection == "Continuous" {
+                        HStack {
+                            Text("Duration (seconds)")
+                                .layoutPriority(1)
+                                .padding(.trailing, 8)
+                            TextField("", text: $duration, onCommit: { self.continuousPreview() })
+                                .keyboardType(.decimalPad)
+                                .multilineTextAlignment(.trailing)
+                        }
                     }
                 }
-                //if self.selection == "Continuous" {
-                if true {
+                if self.selection == "Continuous" {
                     Section (header: Text("ENVELOPE PARAMETERS")) {
                         HStack {
                             Text("Attack Time")
                             Slider(value: $attackTime, in: -1.0...1.0, onEditingChanged: self.continuousPreview)
-                            Text("\(attackTime, specifier:"%.02f")")
+                            Text("\(attackTime, specifier:"%.03f")")
                         }
                         HStack {
                             Text("Decay Time")
                             Slider(value: $decayTime, in: -1.0...1.0, onEditingChanged: self.continuousPreview)
-                            Text("\(decayTime, specifier:"%.02f")")
+                            Text("\(decayTime, specifier:"%.03f")")
                         }
                         HStack {
                             Toggle("Sustained", isOn: $sustained)
@@ -85,7 +86,7 @@ struct HapticPropertiesView: View {
                         HStack {
                             Text("Release Time")
                             Slider(value: $releaseTime, in: 0...1.0, onEditingChanged: self.continuousPreview)
-                            Text("\(releaseTime, specifier:"%.02f")")
+                            Text("\(releaseTime, specifier:"%.03f")")
                         }
                     }
                     .transition(.opacity)
