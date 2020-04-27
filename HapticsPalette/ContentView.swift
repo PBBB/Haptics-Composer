@@ -47,7 +47,7 @@ struct ContentView: View {
                         .disabled(self.hapticEvents.count == 0)
                     }
                     .padding(.horizontal)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 16)
                 }
                 .navigationBarTitle("Haptics Composer")
             .navigationBarItems(leading: EditButton())

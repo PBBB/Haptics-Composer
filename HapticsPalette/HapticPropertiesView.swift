@@ -111,7 +111,7 @@ struct HapticPropertiesView: View {
                 .font(Font.body.weight(.medium))
             }
             .padding(.horizontal)
-            .padding(.vertical, 8)
+            .padding(.vertical, 16)
         }
         .padding(.top, -36)
         .onAppear {
